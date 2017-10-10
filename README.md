@@ -1,22 +1,67 @@
+## Aurora Management Interface Config
 This project is based on [TypeScript-Node-Starter](https://github.com/Microsoft/TypeScript-Node-Starter)
 
-## Aurora Management Interface Config
-| property                         | type   | default         |
-| --------                         | ----   | -------         |
-| [endpoint](#endpoint)            | string | `"/actuator"`   |
-| [cacheDuration](#cache-duration) | number | `1000`          |
-| [healthChecks](#health-checks)   | object | see description |
-| [serviceLinks](#service-links)   | object | see description |
-| [podLinks](#pod-links)           | object | see description |
-| [dependencies](#dependencies)    | object | see description |
+## managementMiddleware([options])
 
+### default
+```js
+{
+    endpoint: "/actuator",
+    cacheDuration: 1000,
+    healthChecks: {
+        default: () => {
+            return { status: "UP" };
+        }
+    },
+    serviceLinks: {
+        metrics: "{metricsHostname}/dashboard/db/openshift-project-spring-actuator-view?var-ds=openshift-{cluster}-ose&var-namespace={namespace}&var-app={name}"
+    },
+    podLinks: {
+        metrics: "{metricsHostname}/dashboard/db/openshift-project-spring-actuator-view-instance?var-ds=openshift-{cluster}-ose&var-namespace={namespace}&var-app={name}&var-instance={podName}"
+    }
+}
+```
 
-### Endpoint
+### Options
 
-### Cache Duration
+#### endpoint
+##### type: `string`
 
-### Health Checks
+#### cacheDuration
+Define cache duration (milliseconds).
+##### type: `number`
 
-### Service Links
-### Pod Links
-### Dependencies
+#### healthChecks
+Takes an object with functions.
+Each function must return an object with a status property. May include other properties.
+##### type: `object`
+
+| Valid statuses |
+| ---            |
+| UP             |
+| COMMENT        |
+| UNKNOWN        |
+| OUT_OF_SERVICE |
+| DOWN           |
+
+##### example: 
+```js
+healthChecks: {
+    diskCheck: function diskCheck() {
+         // ...diskCheck
+         return {
+             status: "UP",
+             diskUsage: "70%"
+         }
+    }
+}
+```
+
+#### serviceLinks
+##### type: `object`
+
+#### podLinks
+##### type: `object`
+
+#### dependencies
+##### type: `object`
