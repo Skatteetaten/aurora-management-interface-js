@@ -1,5 +1,6 @@
 const express = require('express');
 const { managementMiddleware } = require('./lib/middleware');
+const { getBuild } = require('./lib/info');
 
 function test() {
     return {

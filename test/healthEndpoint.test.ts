@@ -55,3 +55,29 @@ describe("Extra fields from health endpoint", () => {
             });
     });
 });
+
+describe("Health status priority", () => {
+    const tests = [
+        {checks: ["UP", "COMMENT", "UNKNOWN", "OUT_OF_SERVICE", "DOWN"], expect: "DOWN", code: 503 },
+        {checks: ["UP", "COMMENT", "OUT_OF_SERVICE"], expect: "OUT_OF_SERVICE", code: 503 },
+        {checks: ["UP", "DOWN", "OUT_OF_SERVICE"], expect: "DOWN", code: 503 },
+        {checks: ["UP", "UNKNOWN", "COMMENT"], expect: "UNKNOWN", code: 503 },
+        {checks: ["UP", "COMMENT"], expect: "COMMENT", code: 200 }
+    ];
+
+    tests.forEach(t => {
+        it(`Should set status to ${t.expect} when healthChecks returns ${t.checks}`, () => {
+            const healthChecks = {};
+            t.checks.forEach(c => {
+                healthChecks[c] = () => { return { status: c }; };
+            });
+
+        return setupRequest({ healthChecks })
+            .get("/health")
+            .expect(t.code)
+            .then(res => {
+                expect(res.body.status).toBe(t.expect);
+            });
+        });
+    });
+});

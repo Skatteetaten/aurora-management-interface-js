@@ -41,7 +41,8 @@
     "testEnvironment": "node"
   },
   "dependencies": {
-    "express": "^4.16.1"
+    "express": "^4.16.1",
+    "git-last-commit": "^0.3.0"
   },
   "devDependencies": {
     "@types/express": "^4.0.37",

@@ -6,6 +6,9 @@ This project is based on [TypeScript-Node-Starter](https://github.com/Microsoft/
 | [endpoint](#endpoint)            | string | `"/actuator"`   |
 | [cacheDuration](#cache-duration) | number | `1000`          |
 | [healthChecks](#health-checks)   | object | see description |
+| [serviceLinks](#service-links)   | object | see description |
+| [podLinks](#pod-links)           | object | see description |
+| [dependencies](#dependencies)    | object | see description |
 
 
 ### Endpoint

@@ -7,6 +7,12 @@ const defaultConfig: ManagementConfig = {
         default: () => {
             return { status: "UP" };
         }
+    },
+    serviceLinks: {
+        metrics: "{metricsHostname}/dashboard/db/openshift-project-spring-actuator-view?var-ds=openshift-{cluster}-ose&var-namespace={namespace}&var-app={name}"
+    },
+    podLinks: {
+        metrics: "{metricsHostname}/dashboard/db/openshift-project-spring-actuator-view-instance?var-ds=openshift-{cluster}-ose&var-namespace={namespace}&var-app={name}&var-instance={podName}"
     }
 };
 
