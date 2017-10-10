@@ -1,5 +1,4 @@
-import { readFileSync } from "fs";
-import * as packageJson from "../../package.json";
+import * as packpath from "packpath";
 export type ManagementInfo = {
     serviceLinks: { [index: string]: string }
     podLinks: { [index: string]: string }
@@ -16,7 +15,7 @@ type InfoBuild = {
 };
 
 export function getBuild(): InfoBuild {
-    const pkg = (<any>packageJson);
+    const pkg = require(`${packpath.self()}/package.json`);
     return {
         name: pkg.name,
         groupId: pkg.groupId,

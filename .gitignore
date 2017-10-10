@@ -7,17 +7,15 @@ lib-cov
 *.pid
 *.gz
 *.swp
+*.tgz
 
 pids
 logs
 results
 tmp
 
-#Build
-public/css/main.css
-
-# API keys and secrets
-.env
+# Test coverage
+coverage
 
 # Dependency directory
 node_modules
