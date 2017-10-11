@@ -34,9 +34,7 @@ export function getGitProperties(): any {
     try {
         const file = readFileSync(`${root}/git-properties.json`);
         return JSON.parse(file.toString());
-    } catch (e) {
-        console.log("Could not find git-properties.json");
-    }
+    } catch (e) {}
 
     return undefined;
 }

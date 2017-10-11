@@ -7,7 +7,7 @@ type LinkInfo = {
 
 export const linksRequestHandler = (router: Router): RequestHandler => {
     return (req: Request, res: Response) => {
-        res.send({
+        res.json({
             links: getRoutes(router, req)
         });
     };
