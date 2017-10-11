@@ -4,7 +4,7 @@ import { Request, Response, Router } from "express";
 import { linksRequestHandler, healthRequestHandler, infoRequestHandler } from "./endpoints";
 import { checkForMissingConfig, ManagementConfig } from "./config";
 
-export function managementMiddleware(userConfig?: ManagementConfig): Router {
+export function managementInterface(userConfig?: ManagementConfig): Router {
     const router: Router = express.Router();
     const config = checkForMissingConfig(userConfig);
 

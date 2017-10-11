@@ -1,5 +1,5 @@
 const express = require('express');
-const { managementMiddleware } = require('./lib/middleware');
+const { managementInterface } = require('./lib/middleware');
 const { getBuild } = require('./lib/info');
 
 function test() {
@@ -26,6 +26,6 @@ const config = {
 }
 
 const app = express();
-app.use(managementMiddleware(config));
+app.use(managementInterface(config));
 app.listen(8081);
 console.log("Management Interface is listening on port", 8081);
