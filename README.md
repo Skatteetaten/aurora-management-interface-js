@@ -3,9 +3,9 @@
 This library is fulfilling the contract between an Application on Openshift and the Aurora Console application known as "the management interface"
 
 ## What endpoint does it contain
-actuator (start endpoint), shows a link of all the other management endpoints
-info, show links to infrastructure, dependencies and git/build information
-health, show health checks.
+ - `/actuator` (default start endpoint), shows a link of all the other management endpoints
+ - `/info` show links to infrastructure, dependencies and git/build information
+ - `/health` show health checks.
 
 This project is based on [TypeScript-Node-Starter](https://github.com/Microsoft/TypeScript-Node-Starter)
 
