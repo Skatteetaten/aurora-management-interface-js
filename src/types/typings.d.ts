@@ -3,6 +3,7 @@ declare module "*.json" {
     export default value;
 }
 
-declare module "git-last-commit" {
-    export function getLastCommit(fn: (err: any, commit: any) => void): void;
+declare module "packpath" {
+    export function self(): string;
+    export function parent(): string;
 }

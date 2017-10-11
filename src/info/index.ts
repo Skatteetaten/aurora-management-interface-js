@@ -1,5 +1,5 @@
 import { readFileSync } from "fs";
-import * as packageJson from "../../package.json";
+import * as packpath from "packpath";
 export type ManagementInfo = {
     serviceLinks: { [index: string]: string }
     podLinks: { [index: string]: string }
@@ -10,17 +10,31 @@ export type ManagementInfo = {
 
 type InfoBuild = {
     name: string;
+    artifactId: string,
     groupId: string,
     description: string;
     version: string;
 };
 
+const root = packpath.parent().split("/node_modules")[0];
+
 export function getBuild(): InfoBuild {
-    const pkg = (<any>packageJson);
+    const file = readFileSync(`${root}/package.json`);
+    const pkg = JSON.parse(file.toString());
     return {
         name: pkg.name,
+        artifactId: pkg.artifactId || pkg.name,
         groupId: pkg.groupId,
         description: pkg.description,
         version: pkg.version
     };
+}
+
+export function getGitProperties(): any {
+    try {
+        const file = readFileSync(`${root}/git-properties.json`);
+        return JSON.parse(file.toString());
+    } catch (e) {}
+
+    return undefined;
 }

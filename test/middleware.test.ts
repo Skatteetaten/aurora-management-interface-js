@@ -1,20 +1,14 @@
 import { } from "jest";
-import { setupRequest } from "./testApp";
+import { request } from "./helper";
 import { ManagementConfig } from "../src/config";
 
 describe("Management Interface middleware default config test", () => {
-    const request = setupRequest();
+    const req = request();
+    const tests = ["/actuator", "/info", "/health"];
 
-    it("Should set default endpoint to /actuator", () => {
-        return request.get("/actuator").expect(200);
-    });
-
-    it("Should set default health check to status UP", () => {
-        return request.get("/health").expect(200, {
-            status: "UP",
-            default: {
-                status: "UP"
-            }
+    tests.forEach(endpoint => {
+        it(`Should return 200 OK at endpoint ${endpoint}`, () => {
+            return req.get(endpoint).expect(200);
         });
     });
 });
