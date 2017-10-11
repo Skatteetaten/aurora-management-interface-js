@@ -1,10 +1,13 @@
 {
   "name": "aurora-management-interface",
-  "version": "0.2.0",
+  "version": "0.3.2",
   "description": "Aurora Management Interface",
   "author": "Aurora OpenShift Utvikling",
   "license": "Apache-2.0",
   "main": "./lib/middleware.js",
+  "bin": {
+    "aurora-mi": "./lib/bin/ami.js"
+  },
   "files": [
     "lib",
     "src",
@@ -16,8 +19,8 @@
   "scripts": {
     "start": "npm run build && npm run watch",
     "build": "npm run clean && npm run build-ts && npm run tslint",
-    "clean": "rimraf lib",
-    "serve": "nodemon test.js",
+    "clean": "rimraf lib coverage *.tgz",
+    "serve": "nodemon test.js --ignore git-properties.json",
     "watch": "concurrently -k -p \"[{name}]\" -n \"TypeScript,Node\" -c \"yellow.bold,cyan.bold,green.bold\" \"npm run watch-ts\" \"npm run serve\"",
     "test": "jest --forceExit",
     "test:coverage": "jest --coverage",
@@ -46,7 +49,6 @@
   },
   "dependencies": {
     "express": "^4.16.1",
-    "git-last-commit": "^0.3.0",
     "packpath": "^0.1.0"
   },
   "devDependencies": {

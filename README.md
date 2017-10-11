@@ -65,3 +65,18 @@ healthChecks: {
 
 #### dependencies
 ##### type: `object`
+
+## Create git-properties file
+Add `aurora-mi git` to package.json scripts and call it at build time to create `git-properties.json`.
+
+Requires `git`.
+
+##### example:
+```json
+{
+    "scripts": {
+        "build": "npm run build:git-props",
+        "build:git-props": "aurora-mi git"
+    }
+}
+```
