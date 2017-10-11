@@ -1,5 +1,5 @@
 import { } from "jest";
-import { setupRequest } from "./testApp";
+import { request } from "./helper";
 import { ManagementConfig } from "../src/config";
 
 describe("Management Interface Health status codes", () => {
@@ -21,7 +21,7 @@ describe("Management Interface Health status codes", () => {
                 return { status: t.status };
             };
 
-            return setupRequest(config)
+            return request(config)
                 .get("/health")
                 .expect(t.expect);
         });
@@ -43,7 +43,7 @@ describe("Extra fields from health endpoint", () => {
     };
 
     it("Should contain extra fields in response body", () => {
-        return setupRequest(config)
+        return request(config)
             .get("/health")
             .expect(200, {
                 status: "UP",
@@ -72,7 +72,7 @@ describe("Health status priority", () => {
                 healthChecks[c] = () => { return { status: c }; };
             });
 
-        return setupRequest({ healthChecks })
+        return request({ healthChecks })
             .get("/health")
             .expect(t.code)
             .then(res => {
