@@ -1,7 +1,6 @@
 #!/usr/bin/env node
 
 import { spawnSync } from "child_process";
-import * as path from "path";
 
 const args = process.argv;
 const script = args[2];
