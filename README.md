@@ -9,6 +9,27 @@ The project is based on [TypeScript-Node-Starter](https://github.com/Microsoft/T
  - `/info` show links to infrastructure, dependencies and git/build information
  - `/health` show health checks.
 
+This project is based on [TypeScript-Node-Starter](https://github.com/Microsoft/TypeScript-Node-Starter)
+
+## Getting started
+
+`npm install aurora-management-interface`
+
+### Use
+```js
+const express = require('express');
+const aurora = require('aurora-management-interface');
+
+const PORT = 8081;
+
+const app = express();
+app.use(aurora.managementInterface());
+
+app.listen(PORT, function() {
+    console.log('Listening on port', PORT);
+});
+```
+
 ## API
 ## managementInterface([options])
 Express middleware.
@@ -48,13 +69,13 @@ Takes an object with functions.
 Each function must return an object with a status property. May include other properties. See example.
 ##### type: `object`
 
-| Valid statuses | HTTP status code |
-| ---            | :----:           |
-| UP             | 200              |
-| COMMENT        | 200              |
-| UNKNOWN        | 503              |
-| OUT_OF_SERVICE | 503              |
-| DOWN           | 503              |
+| Valid statuses | Returns HTTP status code |
+| ---            | :----:                   |
+| UP             | 200                      |
+| COMMENT        | 200                      |
+| UNKNOWN        | 503                      |
+| OUT_OF_SERVICE | 503                      |
+| DOWN           | 503                      |
 
 ##### example: 
 ```js
