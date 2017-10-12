@@ -1,13 +1,13 @@
 # Aurora Management Interface Javascript
 
-This library is fulfilling the contract between an Application on Openshift and the Aurora Console application known as "the management interface"
+This library is for fulfilling the contract between an Application on Openshift and the Aurora Console application known as "the management interface". It provides a slim framework for providing basic application information and customizable health status.
 
-## What endpoint does it contain
+The project is based on [TypeScript-Node-Starter](https://github.com/Microsoft/TypeScript-Node-Starter).
+
+## What endpoints does it contain
  - `/` (default start endpoint), shows a link of all the other management endpoints
  - `/info` show links to infrastructure, dependencies and git/build information
  - `/health` show health checks.
-
-This project is based on [TypeScript-Node-Starter](https://github.com/Microsoft/TypeScript-Node-Starter)
 
 ## API
 ## managementInterface([options])
@@ -89,7 +89,7 @@ If you want to have git information available at /info endpoint you have to gene
 Add `aurora-mi git` to package.json scripts and call it at build time to create `git-properties.json`. Then make sure you add this file when
 running `npm pack`, see example.
 
-Requires `git` client.
+Requires the `git` command line client to be installed on the system running the build.
 
 ##### example:
 ```json
