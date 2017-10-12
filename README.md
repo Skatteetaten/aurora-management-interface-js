@@ -3,7 +3,7 @@
 This library is fulfilling the contract between an Application on Openshift and the Aurora Console application known as "the management interface"
 
 ## What endpoint does it contain
- - `/actuator` (default start endpoint), shows a link of all the other management endpoints
+ - `/` (default start endpoint), shows a link of all the other management endpoints
  - `/info` show links to infrastructure, dependencies and git/build information
  - `/health` show health checks.
 
@@ -16,7 +16,7 @@ Express middleware.
 ### default configuration
 ```js
 {
-    endpoint: "/actuator",
+    endpoint: "/",
     cacheDuration: 1000,
     healthChecks: {
         default: () => {

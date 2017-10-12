@@ -1,7 +1,7 @@
 export type ManagementConfig = { [index: string]: any };
 
 const defaultConfig: ManagementConfig = {
-    endpoint: "/actuator",
+    endpoint: "/",
     cacheDuration: 1000,
     healthChecks: {
         default: () => {
