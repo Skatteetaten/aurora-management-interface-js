@@ -29,6 +29,8 @@ app.listen(PORT, function() {
 });
 ```
 
+Have a look at the [example](_example/index.js) included in this project.
+
 ## API
 ## managementInterface([options])
 Express middleware.
@@ -53,6 +55,7 @@ Express middleware.
 ```
 
 ### Options
+Type: `object`
 
 #### endpoint
 Start endpoint for management interface.
