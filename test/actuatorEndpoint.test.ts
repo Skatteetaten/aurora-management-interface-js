@@ -7,7 +7,7 @@ describe("Actuator endpoint Test", () => {
             .get("/")
             .expect(200)
             .then((res) => {
-                expect(res.body.links.length).toBe(3);
+                expect(Object.keys(res.body._links).length).toBe(4);
             });
     });
 });
