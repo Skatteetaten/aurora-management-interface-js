@@ -1,7 +1,7 @@
 import * as express from "express";
 import { Request, Response, Router } from "express";
 
-import { linksRequestHandler, healthRequestHandler, infoRequestHandler } from "./endpoints";
+import { envRequestHandler, linksRequestHandler, healthRequestHandler, infoRequestHandler } from "./endpoints";
 import { checkForMissingConfig, ManagementConfig } from "./config";
 
 export function managementInterface(userConfig?: ManagementConfig): Router {
@@ -11,6 +11,7 @@ export function managementInterface(userConfig?: ManagementConfig): Router {
     router.get(config.endpoint, linksRequestHandler(router));
     router.get("/health", healthRequestHandler(config));
     router.get("/info", infoRequestHandler(config));
+    router.get("/env", envRequestHandler());
 
     return router;
 }
