@@ -1,6 +1,6 @@
 # Aurora Management Interface Javascript
 
-This library is for fulfilling the contract between an Application on Openshift and the Aurora Console application known as "the management interface". It provides a slim framework for providing basic application information and customizable health status.
+This library is for fulfilling the contract between an Application on OpenShift and the Aurora Console application known as "the management interface". It provides a slim framework for providing basic application information and customizable health status.
 
 The project is based on [TypeScript-Node-Starter](https://github.com/Microsoft/TypeScript-Node-Starter).
 
@@ -9,8 +9,6 @@ The project is based on [TypeScript-Node-Starter](https://github.com/Microsoft/T
  - `/info` show links to infrastructure, dependencies and git/build information
  - `/health` show health checks.
  - `/env` show environment variables.
-
-This project is based on [TypeScript-Node-Starter](https://github.com/Microsoft/TypeScript-Node-Starter)
 
 ## Getting started
 
