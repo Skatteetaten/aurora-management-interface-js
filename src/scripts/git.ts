@@ -30,6 +30,11 @@ function createGitProperties(): void {
     const args = ["log", "-1", `--pretty=format:{ ${pretty} }`];
     const result = spawnSync("git", args);
 
+    if (result.error) {
+        console.log(result.error.message);
+        return;
+    }
+
     const gitProperties = JSON.parse(result.stdout.toString());
     writeFileSync(`${appPath}/git-properties.json`, JSON.stringify(gitProperties, undefined, 4));
 }

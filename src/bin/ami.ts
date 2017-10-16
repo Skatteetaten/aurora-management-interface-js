@@ -6,7 +6,7 @@ const args = process.argv;
 const script = args[2];
 const scriptArgs = args.slice(3);
 
-const appPath = __filename.split("/node_modules")[0];
+const appPath = process.cwd();
 
 switch (script) {
   case "git":

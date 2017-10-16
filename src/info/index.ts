@@ -1,5 +1,4 @@
 import { readFileSync } from "fs";
-import * as packpath from "packpath";
 export type ManagementInfo = {
     serviceLinks: { [index: string]: string }
     podLinks: { [index: string]: string }
@@ -16,7 +15,7 @@ type InfoBuild = {
     version: string;
 };
 
-const root = packpath.parent().split("/node_modules")[0];
+const root = process.cwd();
 
 export function getBuild(): InfoBuild {
     const file = readFileSync(`${root}/package.json`);
