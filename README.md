@@ -55,7 +55,7 @@ Express middleware.
 ```
 
 ### Options
-type: `object`
+##### type: `object`
 
 #### endpoint
 Start endpoint for management interface.
