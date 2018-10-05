@@ -1,5 +1,5 @@
 import { request } from './helper';
-import { ManagementConfig } from '../src/config';
+import { ManagementConfig, HealthCheckResult } from '../src/config';
 
 describe('Management Interface Health status codes', () => {
   const config: ManagementConfig = {
@@ -77,20 +77,41 @@ describe('Health status priority', () => {
   tests.forEach(t => {
     it(`Should set status to ${t.expect} when healthChecks returns ${
       t.checks
-    }`, () => {
-      const healthChecks = {};
-      t.checks.forEach(c => {
-        healthChecks[c] = () => {
-          return { status: c };
+    }`, async () => {
+      const healthChecks = t.checks.reduce((acc, c) => {
+        return {
+          ...acc,
+          [c]: () => ({ status: c })
         };
-      });
+      }, {});
 
-      return request({ healthChecks })
+      const res = await request({ healthChecks })
         .get('/health')
-        .expect(t.code)
-        .then(res => {
-          expect(res.body.status).toBe(t.expect);
-        });
+        .expect(t.code);
+      expect(res.body.status).toBe(t.expect);
     });
+  });
+});
+
+describe('Async health check', () => {
+  it('Should fetch health status async', async () => {
+    const healthStatus = {
+      status: 'DOWN',
+      message: 'Service not available'
+    };
+    const healthChecks = {
+      asyncTest: () =>
+        new Promise<HealthCheckResult>(resolve =>
+          setTimeout(() => resolve(healthStatus), 100)
+        )
+    };
+    const res = await request({
+      healthChecks
+    })
+      .get('/health')
+      .expect(503, {
+        asyncTest: { message: 'Service not available', status: 'DOWN' },
+        status: 'DOWN'
+      });
   });
 });

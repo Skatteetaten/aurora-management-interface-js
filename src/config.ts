@@ -1,4 +1,20 @@
-export type ManagementConfig = { [index: string]: any };
+export interface HealthCheckResult {
+  status: string;
+  [index: string]: any;
+}
+export type HealthCheckFunc = () =>
+  | HealthCheckResult
+  | Promise<HealthCheckResult>;
+
+export interface ManagementConfig {
+  healthChecks: Record<string, HealthCheckFunc>;
+  endpoint?: string;
+  cacheDuration?: number;
+  serviceLinks?: Record<string, string>;
+  podLinks?: Record<string, string>;
+
+  [index: string]: any;
+}
 
 const defaultConfig: ManagementConfig = {
   endpoint: '/',

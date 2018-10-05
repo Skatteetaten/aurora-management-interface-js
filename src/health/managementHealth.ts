@@ -2,10 +2,12 @@ import { HealthStatus, Status } from './healthStatus';
 
 export type HealthResult = { [index: string]: any };
 
-export type HealthCheckFunc = () => HealthStatus | Promise<HealthStatus>;
+export type ManagementHealthCheckFunc = () =>
+  | HealthStatus
+  | Promise<HealthStatus>;
 
 export class ManagementHealth {
-  private healthChecks: HealthCheckFunc[];
+  private healthChecks: ManagementHealthCheckFunc[];
   private validUntil: number;
   private cachedHealthCheck: HealthResult;
   private cacheDuration: number;
@@ -15,7 +17,7 @@ export class ManagementHealth {
     this.cacheDuration = 1000;
   }
 
-  addCheck(check: HealthCheckFunc): ManagementHealth {
+  addCheck(check: ManagementHealthCheckFunc): ManagementHealth {
     this.healthChecks.push(check);
     return this;
   }
