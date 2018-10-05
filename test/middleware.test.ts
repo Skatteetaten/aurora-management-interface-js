@@ -1,15 +1,12 @@
-import { } from "jest";
-import { request } from "./helper";
-import { ManagementConfig } from "../src/config";
+import { request } from './helper';
 
-describe("Management Interface middleware default config test", () => {
-    const req = request();
-    const tests = ["/", "/info", "/health", "/env"];
+describe('Management Interface middleware default config test', () => {
+  const req = request();
+  const tests = ['/', '/info', '/health', '/env'];
 
-    tests.forEach(endpoint => {
-        it(`Should return 200 OK at endpoint ${endpoint}`, () => {
-            return req.get(endpoint).expect(200);
-        });
+  tests.forEach(endpoint => {
+    it(`Should return 200 OK at endpoint ${endpoint}`, () => {
+      return req.get(endpoint).expect(200);
     });
+  });
 });
-

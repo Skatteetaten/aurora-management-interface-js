@@ -1,39 +1,39 @@
-import { readFileSync } from "fs";
+import { readFileSync } from 'fs';
 export type ManagementInfo = {
-    serviceLinks: { [index: string]: string }
-    podLinks: { [index: string]: string }
-    dependencies: { [index: string]: string }
-    build: { [index: string]: string }
-    git: { [index: string]: string }
+  serviceLinks: { [index: string]: string };
+  podLinks: { [index: string]: string };
+  dependencies: { [index: string]: string };
+  build: { [index: string]: string };
+  git: { [index: string]: string };
 };
 
 type InfoBuild = {
-    name: string;
-    artifactId: string,
-    groupId: string,
-    description: string;
-    version: string;
+  name: string;
+  artifactId: string;
+  groupId: string;
+  description: string;
+  version: string;
 };
 
 const root = process.cwd();
 
 export function getBuild(): InfoBuild {
-    const file = readFileSync(`${root}/package.json`);
-    const pkg = JSON.parse(file.toString());
-    return {
-        name: pkg.name,
-        artifactId: pkg.artifactId || pkg.name,
-        groupId: pkg.groupId,
-        description: pkg.description,
-        version: pkg.version
-    };
+  const file = readFileSync(`${root}/package.json`);
+  const pkg = JSON.parse(file.toString());
+  return {
+    name: pkg.name,
+    artifactId: pkg.artifactId || pkg.name,
+    groupId: pkg.groupId,
+    description: pkg.description,
+    version: pkg.version
+  };
 }
 
 export function getGitProperties(): any {
-    try {
-        const file = readFileSync(`${root}/git-properties.json`);
-        return JSON.parse(file.toString());
-    } catch (e) {}
+  try {
+    const file = readFileSync(`${root}/git-properties.json`);
+    return JSON.parse(file.toString());
+  } catch (e) {}
 
-    return undefined;
+  return undefined;
 }
