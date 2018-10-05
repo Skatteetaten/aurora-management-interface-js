@@ -1,8 +1,8 @@
+import { IHealthCheckResult, IManagementConfig } from '../src/config';
 import { request } from './helper';
-import { ManagementConfig, HealthCheckResult } from '../src/config';
 
 describe('Management Interface Health status codes', () => {
-  const config: ManagementConfig = {
+  const config: IManagementConfig = {
     healthChecks: {}
   };
 
@@ -18,7 +18,7 @@ describe('Management Interface Health status codes', () => {
     it(`Should return status code ${t.expect} when status is ${
       t.status
     }`, () => {
-      config.healthChecks['test'] = () => {
+      config.healthChecks.test = () => {
         return { status: t.status };
       };
 
@@ -101,7 +101,7 @@ describe('Async health check', () => {
     };
     const healthChecks = {
       asyncTest: () =>
-        new Promise<HealthCheckResult>(resolve =>
+        new Promise<IHealthCheckResult>(resolve =>
           setTimeout(() => resolve(healthStatus), 100)
         )
     };

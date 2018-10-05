@@ -1,15 +1,18 @@
 #!/usr/bin/env node
+/* tslint:disable:no-console */
 
-import { writeFileSync } from 'fs';
 import { spawnSync } from 'child_process';
+import { writeFileSync } from 'fs';
 
 const args = process.argv;
 const appPath = args[2];
 
-type GitProperties = { [index: string]: string };
+interface IGitProperties {
+  [index: string]: string;
+}
 
 function createGitProperties(): void {
-  const prettyArgs: GitProperties = {
+  const prettyArgs: IGitProperties = {
     'commit.id': '%H',
     'commit.id.short': '%h',
     'commit.message': '%s',
@@ -20,15 +23,15 @@ function createGitProperties(): void {
     'commit.ref': '%D'
   };
 
-  const pretty = Object.keys(prettyArgs).reduce((result, key) => {
-    if (result.length !== 0) {
-      result += ', ';
+  const pretty = Object.keys(prettyArgs).reduce((acc, key) => {
+    if (acc.length !== 0) {
+      acc += ', ';
     }
-    return result + `"${key}": "${prettyArgs[key]}"`;
+    return acc + `"${key}": "${prettyArgs[key]}"`;
   }, '');
 
-  const args = ['log', '-1', `--pretty=format:{ ${pretty} }`];
-  const result = spawnSync('git', args);
+  const gitArguments = ['log', '-1', `--pretty=format:{ ${pretty} }`];
+  const result = spawnSync('git', gitArguments);
 
   if (result.error) {
     console.log(result.error.message);

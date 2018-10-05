@@ -1,23 +1,17 @@
-import { readFileSync } from 'fs';
-export type ManagementInfo = {
-  serviceLinks: { [index: string]: string };
-  podLinks: { [index: string]: string };
-  dependencies: { [index: string]: string };
-  build: { [index: string]: string };
-  git: { [index: string]: string };
-};
+/* tslint:disable:no-console */
 
-type InfoBuild = {
+import { readFileSync } from 'fs';
+interface IInfoBuild {
   name: string;
   artifactId: string;
   groupId: string;
   description: string;
   version: string;
-};
+}
 
 const root = process.cwd();
 
-export function getBuild(): InfoBuild {
+export function getBuild(): IInfoBuild {
   const file = readFileSync(`${root}/package.json`);
   const pkg = JSON.parse(file.toString());
   return {
@@ -33,7 +27,9 @@ export function getGitProperties(): any {
   try {
     const file = readFileSync(`${root}/git-properties.json`);
     return JSON.parse(file.toString());
-  } catch (e) {}
+  } catch (e) {
+    console.log(e);
+  }
 
   return undefined;
 }

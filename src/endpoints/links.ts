@@ -1,6 +1,8 @@
-import { Request, Response, Router, RequestHandler } from 'express';
+import { Request, RequestHandler, Response, Router } from 'express';
 
-type LinkInfo = { [index: string]: { href: string } };
+interface ILinkInfo {
+  [index: string]: { href: string };
+}
 
 export const linksRequestHandler = (router: Router): RequestHandler => {
   return (req: Request, res: Response) => {
@@ -10,11 +12,11 @@ export const linksRequestHandler = (router: Router): RequestHandler => {
   };
 };
 
-const getRoutes = (router: Router, req: Request): Array<LinkInfo> => {
+const getRoutes = (router: Router, req: Request): ILinkInfo[] => {
   const ref = req.protocol + '://' + req.headers.host;
   const self = req.route.path;
 
-  return router.stack.reduce((result: LinkInfo, it) => {
+  return router.stack.reduce((result: ILinkInfo, it) => {
     const path = it.route.path;
     const rel = path === self ? 'self' : path.replace('/', '');
     const href = ref + path;

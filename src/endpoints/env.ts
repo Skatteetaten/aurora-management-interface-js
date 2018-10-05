@@ -1,4 +1,4 @@
-import { Request, Response, Router, RequestHandler } from 'express';
+import { Request, RequestHandler, Response } from 'express';
 
 export function envRequestHandler(): RequestHandler {
   return (req: Request, res: Response) => {

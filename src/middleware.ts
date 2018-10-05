@@ -1,15 +1,15 @@
 import * as express from 'express';
 import { Router } from 'express';
 
+import { checkForMissingConfig, IManagementConfig } from './config';
 import {
   envRequestHandler,
-  linksRequestHandler,
   healthRequestHandler,
-  infoRequestHandler
+  infoRequestHandler,
+  linksRequestHandler
 } from './endpoints';
-import { checkForMissingConfig, ManagementConfig } from './config';
 
-export function managementInterface(userConfig?: ManagementConfig): Router {
+export function managementInterface(userConfig?: IManagementConfig): Router {
   const router: Router = express.Router();
   const config = checkForMissingConfig(userConfig);
 

@@ -1,12 +1,12 @@
-export interface HealthCheckResult {
+export interface IHealthCheckResult {
   status: string;
   [index: string]: any;
 }
 export type HealthCheckFunc = () =>
-  | HealthCheckResult
-  | Promise<HealthCheckResult>;
+  | IHealthCheckResult
+  | Promise<IHealthCheckResult>;
 
-export interface ManagementConfig {
+export interface IManagementConfig {
   healthChecks: Record<string, HealthCheckFunc>;
   endpoint?: string;
   cacheDuration?: number;
@@ -16,7 +16,7 @@ export interface ManagementConfig {
   [index: string]: any;
 }
 
-const defaultConfig: ManagementConfig = {
+const defaultConfig: IManagementConfig = {
   endpoint: '/',
   cacheDuration: 1000,
   healthChecks: {
@@ -38,8 +38,8 @@ const defaultConfig: ManagementConfig = {
  * Sets missing properties to default configuration
  */
 export function checkForMissingConfig(
-  userConfig: ManagementConfig
-): ManagementConfig {
+  userConfig: IManagementConfig
+): IManagementConfig {
   const config = userConfig;
   if (config === undefined) {
     return defaultConfig;

@@ -1,4 +1,6 @@
-export type HealthFields = { [index: string]: string };
+export interface IHealthFields {
+  [index: string]: string;
+}
 
 export enum Status {
   UP,
@@ -9,7 +11,7 @@ export enum Status {
 }
 
 export namespace Status {
-  export function valueOf(status: String): Status {
+  export function valueOf(status: string): Status {
     switch (status) {
       case 'UP':
         return Status.UP;
@@ -30,17 +32,17 @@ export namespace Status {
 
 export class HealthStatus {
   private name: string;
-  private fields: HealthFields;
+  private fields: IHealthFields;
 
   private status: Status;
 
-  constructor(name: string, status: Status, fields: HealthFields = {}) {
+  constructor(name: string, status: Status, fields: IHealthFields = {}) {
     this.fields = fields;
     this.name = name;
     this.status = status;
   }
 
-  withField(key: string, value: string): HealthStatus {
+  public withField(key: string, value: string): HealthStatus {
     this.fields = {
       ...this.fields,
       [key]: value
@@ -48,11 +50,11 @@ export class HealthStatus {
     return this;
   }
 
-  getName(): string {
+  public getName(): string {
     return this.name;
   }
 
-  getFields(): HealthFields {
+  public getFields(): IHealthFields {
     this.fields = {
       status: Status[this.status],
       ...this.fields
@@ -60,7 +62,7 @@ export class HealthStatus {
     return this.fields;
   }
 
-  getStatus(): Status {
+  public getStatus(): Status {
     return this.status;
   }
 }

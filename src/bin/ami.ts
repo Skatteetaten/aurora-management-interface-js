@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+/* tslint:disable:no-console */
 
 import { spawnSync } from 'child_process';
 
@@ -10,7 +11,7 @@ const appPath = process.cwd();
 
 switch (script) {
   case 'git': {
-    const aurora = spawnSync(
+    spawnSync(
       'node',
       [require.resolve('../scripts/' + script)].concat(appPath, scriptArgs)
     );
