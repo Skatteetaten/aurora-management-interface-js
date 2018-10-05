@@ -5,21 +5,17 @@ import { ManagementHealth } from '../health';
 export function healthRequestHandler(
   config: IManagementConfig
 ): RequestHandler {
-  const managementHealth = fromConfig(config);
+  const managementHealth = new ManagementHealth();
+  managementHealth.cacheFor(config.cacheDuration);
+  managementHealth.addHealthChecks(config.healthChecks);
+
   return (req: Request, res: Response) => {
     const health = managementHealth.run();
-    health.then(async result => {
+    health.then(result => {
       const status: string = result.status;
       res.status(getReturnCode(status)).json(result);
     });
   };
-}
-
-function fromConfig(config: IManagementConfig): ManagementHealth {
-  const managementHealth = new ManagementHealth();
-  managementHealth.cacheFor(config.cacheDuration);
-  managementHealth.addHealthChecks(config.healthChecks);
-  return managementHealth;
 }
 
 function getReturnCode(status: string): number {
