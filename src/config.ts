@@ -7,17 +7,19 @@ export type HealthCheckFunc = () =>
   | Promise<IHealthCheckResult>;
 
 export interface IManagementConfig {
-  healthChecks: Record<string, HealthCheckFunc>;
+  healthChecks?: Record<string, HealthCheckFunc>;
   endpoint?: string;
   cacheDuration?: number;
   serviceLinks?: Record<string, string>;
   podLinks?: Record<string, string>;
+  environmentVariables?: Record<string, string>;
 
   [index: string]: any;
 }
 
 const defaultConfig: IManagementConfig = {
   endpoint: '/',
+  environmentVariables: process.env,
   cacheDuration: 1000,
   healthChecks: {
     default: () => {
@@ -37,7 +39,7 @@ const defaultConfig: IManagementConfig = {
 /**
  * Sets missing properties to default configuration
  */
-export function checkForMissingConfig(
+export function applyDefaultConfigToMissingProperties(
   userConfig: IManagementConfig
 ): IManagementConfig {
   const config = userConfig;
