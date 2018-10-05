@@ -21,7 +21,6 @@ function fromConfig(config: ManagementConfig): ManagementHealth {
   Object.keys(checks).forEach(k => {
     managementHealth.addCheck(async () => {
       const result = await checks[k]();
-      console.log(result);
       const { status, ...fields } = result;
       return new HealthStatus(k, Status.valueOf(status), fields);
     });
