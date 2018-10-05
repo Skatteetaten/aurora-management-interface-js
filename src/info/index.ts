@@ -28,8 +28,6 @@ export function getGitProperties(): any {
     const file = readFileSync(`${root}/git-properties.json`);
     return JSON.parse(file.toString());
   } catch (e) {
-    console.log(e);
+    return;
   }
-
-  return undefined;
 }
