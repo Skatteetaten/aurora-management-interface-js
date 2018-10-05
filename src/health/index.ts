@@ -1,2 +1,2 @@
-export * from "./managementHealth";
-export * from "./healthStatus";
+export * from './managementHealth';
+export * from './healthStatus';

@@ -1,18 +1,18 @@
-import { Request, Response, Router, RequestHandler } from "express";
-import { ManagementInfo, getBuild, getGitProperties } from "../info";
-import { ManagementConfig } from "../config";
+import { Request, RequestHandler, Response } from 'express';
+import { IManagementConfig } from '../config';
+import { getBuild, getGitProperties } from '../info';
 
-export function infoRequestHandler(config: ManagementConfig): RequestHandler {
-    const { serviceLinks, podLinks, dependencies } = config;
-    const build = getBuild();
-    const git = getGitProperties();
-    return (req: Request, res: Response) => {
-            res.json({
-                serviceLinks,
-                podLinks,
-                dependencies,
-                build,
-                git
-            });
-    };
+export function infoRequestHandler(config: IManagementConfig): RequestHandler {
+  const { serviceLinks, podLinks, dependencies } = config;
+  const build = getBuild();
+  const git = getGitProperties();
+  return (req: Request, res: Response) => {
+    res.json({
+      build,
+      dependencies,
+      git,
+      podLinks,
+      serviceLinks
+    });
+  };
 }

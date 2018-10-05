@@ -1,57 +1,78 @@
-import { HealthStatus, Status } from "./healthStatus";
+import { HealthCheckFunc } from '../config';
+import { HealthStatus, Status } from './healthStatus';
 
-export type HealthResult = { [index: string]: any };
-
-export interface HealthCheckFunc {
-    (): HealthStatus;
+interface IHealthResult {
+  [index: string]: any;
 }
 
+type ManagementHealthCheckFunc = () => HealthStatus | Promise<HealthStatus>;
+
 export class ManagementHealth {
-    private healthChecks: HealthCheckFunc[];
-    private validUntil: number;
-    private cachedHealthCheck: HealthResult;
-    private cacheDuration: number;
+  private healthChecks: ManagementHealthCheckFunc[];
+  private validUntil: number;
+  private cachedHealthCheck: IHealthResult;
+  private cacheDuration: number;
 
-    constructor() {
-        this.healthChecks = [];
-        this.cacheDuration = 1000;
+  constructor() {
+    this.healthChecks = [];
+    this.cacheDuration = 1000;
+  }
+
+  public addHealthChecks(checks: Record<string, HealthCheckFunc>) {
+    Object.keys(checks).forEach(k => {
+      this.addCheck(async () => {
+        const result = await checks[k]();
+        const { status, ...fields } = result;
+        return new HealthStatus(k, Status.valueOf(status), fields);
+      });
+    });
+  }
+
+  public cacheFor(duration: number): ManagementHealth {
+    this.cacheDuration = duration;
+    return this;
+  }
+
+  public async run(): Promise<IHealthResult> {
+    const now = new Date().getTime();
+    const isCacheValid = now < this.validUntil;
+    if (
+      this.validUntil !== undefined &&
+      this.cachedHealthCheck !== undefined &&
+      isCacheValid
+    ) {
+      return this.cachedHealthCheck;
     }
 
-    addCheck(check: HealthCheckFunc): ManagementHealth {
-        this.healthChecks.push(check);
-        return this;
+    const result: IHealthResult = {};
+    if (this.healthChecks.length === 0) {
+      result.status = Status[Status.UP];
+      return result;
     }
 
-    cacheFor(duration: number): ManagementHealth  {
-        this.cacheDuration = duration;
-        return this;
-    }
+    const healthResults: Array<Promise<HealthStatus>> = this.healthChecks.map(
+      async check => check()
+    );
 
-    run(): HealthResult {
-        const now = new Date().getTime();
-        const isCacheValid = now < this.validUntil;
-        if (this.validUntil !== undefined && this.cachedHealthCheck !== undefined && isCacheValid) {
-            return this.cachedHealthCheck;
-        }
+    const healthStatuses = await Promise.all(healthResults);
+    const mainStatus = healthStatuses
+      .map(hr => hr.getStatus())
+      .sort()
+      .pop();
+    result.status = Status[mainStatus];
 
-        const result: HealthResult = {};
-        if (this.healthChecks.length === 0) {
-            result["status"] = Status[Status.UP];
-            return result;
-        }
+    healthStatuses.forEach(health => {
+      result[health.getName()] = health.getFields();
+    });
 
-        const healthResults: HealthStatus[] = this.healthChecks.map(c => c());
+    this.cachedHealthCheck = result;
+    this.validUntil = now + this.cacheDuration;
 
-        const mainStatus = healthResults.map(hr => hr.getStatus()).sort().pop();
-        result["status"] =  Status[mainStatus];
+    return result;
+  }
 
-        healthResults.forEach(health => {
-            result[health.getName()] =  health.getFields();
-        });
-
-        this.cachedHealthCheck = result;
-        this.validUntil = now + this.cacheDuration;
-
-        return result;
-    }
+  private addCheck(check: ManagementHealthCheckFunc): ManagementHealth {
+    this.healthChecks.push(check);
+    return this;
+  }
 }
