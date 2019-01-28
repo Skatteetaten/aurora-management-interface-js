@@ -1,5 +1,6 @@
 {
   "name": "aurora-management-interface",
+  "groupId": "no.skatteeaten.aurora",
   "version": "0.5.2",
   "description": "Aurora Management Interface",
   "author": "Aurora OpenShift Utvikling",
