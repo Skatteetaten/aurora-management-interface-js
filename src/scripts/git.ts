@@ -20,7 +20,9 @@ function createGitProperties(): void {
     'commit.user.name': '%cn',
     'commit.user.email': '%ce',
     'commit.time': '%cI',
-    'commit.ref': '%D'
+    'commit.ref': '%D',
+    'commit.time/v1': '%ci',
+    'commit.ref/v1': '%d'
   };
 
   const pretty = Object.keys(prettyArgs).reduce((acc, key) => {
