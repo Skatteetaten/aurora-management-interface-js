@@ -45,7 +45,9 @@ export function createGitProperties(
     return;
   }
 
-  const gitProperties = JSON.parse(result.stdout.toString());
+  const normalizedStr = result.stdout.toString().replace(/\r?\n|\r/g, '');
+  const gitProperties = JSON.parse(normalizedStr);
+
   if (options.writeToDisk) {
     writeFileSync(
       `${appPath}/git-properties.json`,
