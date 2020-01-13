@@ -8,7 +8,7 @@ def overrides = [
     versionStrategy: [
         [ branch: 'master', versionHint: '0']
     ],
-    iqOrganizationName: "Team AOS",
+    iq: false,
     publishToNpm: true, 
     publishSnapshotToNpm: true, 
     deployToNexus: false,
