@@ -1,5 +1,9 @@
 import * as express from 'express';
 import { Router } from 'express';
+import {
+  collectDefaultMetrics,
+  DefaultMetricsCollectorConfiguration
+} from 'prom-client';
 
 import {
   applyDefaultConfigToMissingProperties,
@@ -9,8 +13,15 @@ import {
   envRequestHandler,
   healthRequestHandler,
   infoRequestHandler,
-  linksRequestHandler
+  linksRequestHandler,
+  metricsRequestHandler
 } from './endpoints';
+
+export function collectPrometheusMetrics(
+  config?: DefaultMetricsCollectorConfiguration
+) {
+  collectDefaultMetrics(config);
+}
 
 export function managementInterface(userConfig?: IManagementConfig): Router {
   const router: Router = express.Router();
@@ -20,6 +31,7 @@ export function managementInterface(userConfig?: IManagementConfig): Router {
   router.get('/health', healthRequestHandler(config));
   router.get('/info', infoRequestHandler(config));
   router.get('/env', envRequestHandler(config.environmentVariables));
+  router.get('/metrics', metricsRequestHandler());
 
   return router;
 }

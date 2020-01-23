@@ -5,6 +5,6 @@ describe('Actuator endpoint Test', () => {
     const res = await request()
       .get('/')
       .expect(200);
-    expect(Object.keys(res.body._links).length).toBe(4);
+    expect(Object.keys(res.body._links).length).toBe(5);
   });
 });

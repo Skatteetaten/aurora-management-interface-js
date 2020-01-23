@@ -1,5 +1,8 @@
 const express = require('express');
-const { managementInterface } = require('../lib/middleware');
+const {
+  managementInterface,
+  collectPrometheusMetrics
+} = require('../lib/middleware');
 
 function alwaysUp() {
   return {
@@ -47,6 +50,7 @@ const config = {
 };
 
 const app = express();
+collectPrometheusMetrics();
 app.use(managementInterface(config));
 
 app.listen(8081, () => {
