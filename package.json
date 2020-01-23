@@ -6,6 +6,7 @@
   "author": "Aurora OpenShift Utvikling",
   "license": "Apache-2.0",
   "main": "./lib/middleware.js",
+  "types": "./lib/middleware.d.ts",
   "bin": {
     "aurora-mi": "./lib/bin/ami.js"
   },
