@@ -53,7 +53,8 @@
     "testEnvironment": "node"
   },
   "peerDependencies": {
-    "express": "^4.16.4"
+    "express": "^4.16.4",
+    "prom-client": "11.5.3"
   },
   "devDependencies": {
     "@skatteetaten/ci-scripts": "2.0.2",
