@@ -52,9 +52,11 @@
     ],
     "testEnvironment": "node"
   },
-  "peerDependencies": {
-    "express": "^4.16.4",
+  "dependencies": {
     "prom-client": "11.5.3"
+  },
+  "peerDependencies": {
+    "express": "^4.16.4"
   },
   "devDependencies": {
     "@skatteetaten/ci-scripts": "2.0.2",
