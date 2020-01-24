@@ -14,7 +14,7 @@ import {
   healthRequestHandler,
   infoRequestHandler,
   linksRequestHandler,
-  metricsRequestHandler
+  prometheusRequestHandler
 } from './endpoints';
 
 export function collectPrometheusMetrics(
@@ -31,7 +31,7 @@ export function managementInterface(userConfig?: IManagementConfig): Router {
   router.get('/health', healthRequestHandler(config));
   router.get('/info', infoRequestHandler(config));
   router.get('/env', envRequestHandler(config.environmentVariables));
-  router.get('/metrics', metricsRequestHandler());
+  router.get('/prometheus', prometheusRequestHandler());
 
   return router;
 }
