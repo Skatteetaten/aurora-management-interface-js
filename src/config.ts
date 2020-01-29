@@ -13,7 +13,6 @@ export interface IManagementConfig {
   serviceLinks?: Record<string, string>;
   podLinks?: Record<string, string>;
   environmentVariables?: Record<string, string>;
-  metrics?: string;
 
   [index: string]: any;
 }

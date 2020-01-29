@@ -24,6 +24,7 @@ const aurora = require('aurora-management-interface');
 const PORT = 8081;
 
 const app = express();
+aurora.collectPrometheusMetrics();
 app.use(aurora.managementInterface());
 
 app.listen(PORT, function() {
@@ -114,7 +115,7 @@ Value must be `string`.
 
 #### podLinks
 
-Used by Aurora Console to create links to services like Grafana.
+Used by Aurora Konsoll to create links to services like Grafana.
 Value must be `string`.
 
 ##### type: `object`
@@ -125,6 +126,18 @@ Define service dependencies for your application.
 Value must be `string`.
 
 ##### type: `object`
+
+## collectPrometheusMetrics
+
+The function collectPrometheusMetrics will collect default metrics recommended by Prometheus.
+
+You can pass the following parameters into the function: timeout, timestamps, register, and prefix.
+
+example:
+
+```js
+collectPrometheusMetrics({ timeout: 5 });
+```
 
 ## Create git-properties file
 
