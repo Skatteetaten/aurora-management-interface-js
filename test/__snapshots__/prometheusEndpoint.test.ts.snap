@@ -1,0 +1,8 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Prometheus endpoint Test should not return default metrics but a custom metric 1`] = `
+"# HELP test test Just a test counter
+# TYPE test counter
+test 2
+"
+`;

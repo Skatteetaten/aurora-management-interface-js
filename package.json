@@ -53,6 +53,9 @@
     ],
     "testEnvironment": "node"
   },
+  "dependencies": {
+    "prom-client": "11.5.3"
+  },
   "peerDependencies": {
     "express": "^4.16.4"
   },

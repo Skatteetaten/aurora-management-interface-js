@@ -1,7 +1,16 @@
+import { DefaultMetricsCollectorConfiguration, Registry } from 'prom-client';
+
 export interface IHealthCheckResult {
   status: string;
   [index: string]: any;
 }
+
+export interface IMetricsConfig {
+  enabled?: boolean;
+  defaultMetrics?: boolean | DefaultMetricsCollectorConfiguration;
+  registers?: Registry[];
+}
+
 export type HealthCheckFunc = () =>
   | IHealthCheckResult
   | Promise<IHealthCheckResult>;
@@ -13,6 +22,7 @@ export interface IManagementConfig {
   serviceLinks?: Record<string, string>;
   podLinks?: Record<string, string>;
   environmentVariables?: Record<string, string>;
+  metrics?: IMetricsConfig;
 
   [index: string]: any;
 }
@@ -33,6 +43,11 @@ const defaultConfig: IManagementConfig = {
   podLinks: {
     metrics:
       '{metricsHostname}/dashboard/db/openshift-project-spring-actuator-view-instance?var-ds=openshift-{cluster}-ose&var-namespace={namespace}&var-app={name}&var-instance={podName}'
+  },
+  metrics: {
+    enabled: true,
+    defaultMetrics: true,
+    registers: []
   }
 };
 
@@ -42,16 +57,27 @@ const defaultConfig: IManagementConfig = {
 export function applyDefaultConfigToMissingProperties(
   userConfig: IManagementConfig
 ): IManagementConfig {
-  const config = userConfig;
-  if (config === undefined) {
+  if (userConfig === undefined) {
     return defaultConfig;
   }
 
-  Object.keys(defaultConfig).forEach(key => {
-    if (config[key] === undefined) {
-      config[key] = defaultConfig[key];
+  applyDefault(userConfig);
+  applyDefault(userConfig, 'metrics');
+
+  return userConfig;
+}
+
+function applyDefault(config: any, startKey?: string): void {
+  let d: any = defaultConfig;
+  let c: any = config;
+  if (startKey) {
+    d = defaultConfig[startKey];
+    c = config[startKey];
+  }
+
+  Object.keys(d).forEach(key => {
+    if (c[key] === undefined) {
+      c[key] = d[key];
     }
   });
-
-  return config;
 }

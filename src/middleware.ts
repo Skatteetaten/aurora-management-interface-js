@@ -9,7 +9,8 @@ import {
   envRequestHandler,
   healthRequestHandler,
   infoRequestHandler,
-  linksRequestHandler
+  linksRequestHandler,
+  prometheusRequestHandler
 } from './endpoints';
 
 export function managementInterface(userConfig?: IManagementConfig): Router {
@@ -20,6 +21,10 @@ export function managementInterface(userConfig?: IManagementConfig): Router {
   router.get('/health', healthRequestHandler(config));
   router.get('/info', infoRequestHandler(config));
   router.get('/env', envRequestHandler(config.environmentVariables));
+
+  if (config.metrics?.enabled) {
+    router.get('/prometheus', prometheusRequestHandler(config));
+  }
 
   return router;
 }

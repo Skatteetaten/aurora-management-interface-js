@@ -10,6 +10,7 @@ The project is based on [TypeScript-Node-Starter](https://github.com/Microsoft/T
 - `/info` show links to infrastructure, dependencies and git/build information
 - `/health` show health checks.
 - `/env` show environment variables.
+- `/prometheus` expose Prometheus metrics.
 
 ## Getting started
 
@@ -55,33 +56,30 @@ Express middleware.
     },
     podLinks: {
         metrics: "{metricsHostname}/dashboard/db/openshift-project-spring-actuator-view-instance?var-ds=openshift-{cluster}-ose&var-namespace={namespace}&var-app={name}&var-instance={podName}"
+    },
+    metrics: {
+      enabled: true,
+      defaultMetrics: true,
+      registers: []
     }
 }
 ```
 
-### Options
+## Options <`object`>
 
-##### type: `object`
-
-#### endpoint
+### endpoint <`string`>
 
 Start endpoint for management interface.
 
-##### type: `string`
-
-#### cacheDuration
+### cacheDuration <`number`>
 
 Define cache duration (milliseconds).
 
-##### type: `number`
-
-#### healthChecks
+### healthChecks <`object`>
 
 Perform health checks for your application.
 Takes an object with functions.
 Each function must return an object with a status property. May include other properties. See example.
-
-##### type: `object`
 
 | Valid statuses | Returns HTTP status code |
 | -------------- | :----------------------: |
@@ -105,26 +103,53 @@ healthChecks: {
 }
 ```
 
-#### serviceLinks
+### serviceLinks <`object`>
 
 Used by Aurora Console to create links to services like Grafana.
 Value must be `string`.
 
-##### type: `object`
+### podLinks <`object`>
 
-#### podLinks
-
-Used by Aurora Console to create links to services like Grafana.
+Used by Aurora Konsoll to create links to services like Grafana.
 Value must be `string`.
 
-##### type: `object`
-
-#### dependencies
+### dependencies <`object`>
 
 Define service dependencies for your application.
 Value must be `string`.
 
-##### type: `object`
+### metrics <`object`>
+
+Metrics in this library is created by using https://github.com/siimon/prom-client.
+
+#### metrics/enabled <`boolean`>
+
+Decide if the library should expose Prometheus metrics or not.
+
+#### metrics/defaultMetrics <`boolean`> or <`object`>
+
+The defaultMetrics will enabled default metrics recommended by Prometheus.
+
+By passing a boolean value you can decide if you want default metrics or not.
+
+You can also pass the following parameters into the object: timeout, timestamps, register, and prefix.
+See: https://github.com/siimon/prom-client#default-metrics
+
+##### example:
+
+```ts
+defaultMetrics: {
+	timeout?: number;
+	timestamps?: boolean;
+	register?: Registry;
+	prefix?: string
+}
+```
+
+#### metrics/registers <`Registry[]`>
+
+By default there is a default registry available that will be used.
+See: https://github.com/siimon/prom-client#multiple-registries
 
 ## Create git-properties file
 
