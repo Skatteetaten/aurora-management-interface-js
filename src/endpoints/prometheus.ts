@@ -1,5 +1,5 @@
 import { Request, RequestHandler, Response } from 'express';
-import { register, collectDefaultMetrics, Registry } from 'prom-client';
+import { collectDefaultMetrics, register, Registry } from 'prom-client';
 import { IManagementConfig } from '../config';
 
 export function prometheusRequestHandler(

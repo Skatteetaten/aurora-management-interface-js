@@ -5,10 +5,10 @@ export interface IHealthCheckResult {
   [index: string]: any;
 }
 
-export interface MetricsConfig {
-  enabled: boolean;
-  defaultMetrics: boolean | DefaultMetricsCollectorConfiguration;
-  registers: Registry[];
+export interface IMetricsConfig {
+  enabled?: boolean;
+  defaultMetrics?: boolean | DefaultMetricsCollectorConfiguration;
+  registers?: Registry[];
 }
 
 export type HealthCheckFunc = () =>
@@ -22,7 +22,7 @@ export interface IManagementConfig {
   serviceLinks?: Record<string, string>;
   podLinks?: Record<string, string>;
   environmentVariables?: Record<string, string>;
-  metrics?: MetricsConfig;
+  metrics?: IMetricsConfig;
 
   [index: string]: any;
 }

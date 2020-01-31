@@ -22,7 +22,7 @@ export function managementInterface(userConfig?: IManagementConfig): Router {
   router.get('/info', infoRequestHandler(config));
   router.get('/env', envRequestHandler(config.environmentVariables));
 
-  if (userConfig.metrics?.enabled) {
+  if (config.metrics?.enabled) {
     router.get('/prometheus', prometheusRequestHandler(config));
   }
 
