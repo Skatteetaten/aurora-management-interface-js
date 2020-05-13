@@ -10,6 +10,10 @@ export function request(config?: ManagementConfig): SuperTest<Test> {
   app.use(
     managementInterface({
       metrics: {
+        // Enabling metrics for all tests will make every test register default
+        // metrics for the global registry and will end up failing. We could
+        // clear register before each test, but instead we only enable metrics
+        // when we want to test prometheus endpoint.
         enabled: false,
       },
       ...config,
