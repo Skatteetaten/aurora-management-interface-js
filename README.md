@@ -14,20 +14,20 @@ The project is based on [TypeScript-Node-Starter](https://github.com/Microsoft/T
 
 ## Getting started
 
-`npm install aurora-management-interface`
+`npm install @skatteetaten/management-interface`
 
 ### Use
 
-```js
-const express = require('express');
-const aurora = require('aurora-management-interface');
+```ts
+import express from 'express';
+import { managementInterface } from '@skatteetaten/management-interface';
 
 const PORT = 8081;
 
 const app = express();
-app.use(aurora.managementInterface());
+app.use(managementInterface());
 
-app.listen(PORT, function() {
+app.listen(PORT, function () {
   console.log('Listening on port', PORT);
 });
 ```
@@ -44,24 +44,27 @@ Express middleware.
 
 ```js
 {
-    endpoint: "/",
-    cacheDuration: 1000,
-    healthChecks: {
-        default: () => {
-            return { status: "UP" };
-        }
+  endpoint: '/',
+  environmentVariables: process.env,
+  cacheDuration: 1000,
+  healthChecks: {
+    default: () => {
+      return { status: 'UP' };
     },
-    serviceLinks: {
-        metrics: "{metricsHostname}/dashboard/db/openshift-project-spring-actuator-view?var-ds=openshift-{cluster}-ose&var-namespace={namespace}&var-app={name}"
-    },
-    podLinks: {
-        metrics: "{metricsHostname}/dashboard/db/openshift-project-spring-actuator-view-instance?var-ds=openshift-{cluster}-ose&var-namespace={namespace}&var-app={name}&var-instance={podName}"
-    },
-    metrics: {
-      enabled: true,
-      defaultMetrics: true,
-      registers: []
-    }
+  },
+  serviceLinks: {
+    metrics:
+      '{metricsHostname}/dashboard/db/openshift-project-spring-actuator-view?var-ds=openshift-{cluster}-ose&var-namespace={namespace}&var-app={name}',
+  },
+  podLinks: {
+    metrics:
+      '{metricsHostname}/dashboard/db/openshift-project-spring-actuator-view-instance?var-ds=openshift-{cluster}-ose&var-namespace={namespace}&var-app={name}&var-instance={podName}',
+  },
+  metrics: {
+    enabled: true,
+    defaultMetrics: true,
+    registers: [],
+  },
 }
 ```
 
@@ -97,7 +100,7 @@ healthChecks: {
     // ...diskCheck
     return {
       status: 'UP',
-      diskUsage: '70%'
+      diskUsage: '70%',
     };
   }
 }
