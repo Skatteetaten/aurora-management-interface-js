@@ -1,7 +1,7 @@
 import { HealthCheckFunc } from '../config';
 import { HealthStatus, Status } from './healthStatus';
 
-interface IHealthResult {
+interface HealthResult {
   [index: string]: any;
 }
 
@@ -10,7 +10,7 @@ type ManagementHealthCheckFunc = () => HealthStatus | Promise<HealthStatus>;
 export class ManagementHealth {
   private healthChecks: ManagementHealthCheckFunc[];
   private validUntil: number;
-  private cachedHealthCheck: IHealthResult;
+  private cachedHealthCheck: HealthResult;
   private cacheDuration: number;
 
   constructor() {
@@ -18,8 +18,8 @@ export class ManagementHealth {
     this.cacheDuration = 1000;
   }
 
-  public addHealthChecks(checks: Record<string, HealthCheckFunc>) {
-    Object.keys(checks).forEach(k => {
+  public addHealthChecks(checks: Record<string, HealthCheckFunc>): void {
+    Object.keys(checks).forEach((k) => {
       this.addCheck(async () => {
         const result = await checks[k]();
         const { status, ...fields } = result;
@@ -33,7 +33,7 @@ export class ManagementHealth {
     return this;
   }
 
-  public async run(): Promise<IHealthResult> {
+  public async run(): Promise<HealthResult> {
     const now = new Date().getTime();
     const isCacheValid = now < this.validUntil;
     if (
@@ -44,24 +44,24 @@ export class ManagementHealth {
       return this.cachedHealthCheck;
     }
 
-    const result: IHealthResult = {};
+    const result: HealthResult = {};
     if (this.healthChecks.length === 0) {
-      result.status = Status[Status.UP];
+      result.status = Status.UP.value;
       return result;
     }
 
-    const healthResults: Array<Promise<HealthStatus>> = this.healthChecks.map(
-      async check => check()
-    );
+    const healthResults: Array<Promise<
+      HealthStatus
+    >> = this.healthChecks.map(async (check) => check());
 
     const healthStatuses = await Promise.all(healthResults);
     const mainStatus = healthStatuses
-      .map(hr => hr.getStatus())
-      .sort()
+      .map((hr) => hr.getStatus())
+      .sort((s1, s2) => s1.weight - s2.weight)
       .pop();
-    result.status = Status[mainStatus];
+    result.status = mainStatus.value;
 
-    healthStatuses.forEach(health => {
+    healthStatuses.forEach((health) => {
       result[health.getName()] = health.getFields();
     });
 

@@ -1,8 +1,8 @@
 import { Request, RequestHandler, Response } from 'express';
-import { IManagementConfig } from '../config';
+import { ManagementConfig } from '../config';
 import { getBuild, getGitProperties } from '../info';
 
-export function infoRequestHandler(config: IManagementConfig): RequestHandler {
+export function infoRequestHandler(config: ManagementConfig): RequestHandler {
   const { serviceLinks, podLinks, dependencies } = config;
   const build = getBuild();
   const git = getGitProperties();
@@ -12,7 +12,7 @@ export function infoRequestHandler(config: IManagementConfig): RequestHandler {
       dependencies,
       git,
       podLinks,
-      serviceLinks
+      serviceLinks,
     });
   };
 }

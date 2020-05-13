@@ -1,13 +1,13 @@
 import { Request, RequestHandler, Response } from 'express';
 import { collectDefaultMetrics, register, Registry } from 'prom-client';
-import { IManagementConfig } from '../config';
+import { ManagementConfig } from '../config';
 
 export function prometheusRequestHandler(
-  config: IManagementConfig
+  config: ManagementConfig
 ): RequestHandler {
   const defaultMetrics = config.metrics?.defaultMetrics;
   if (defaultMetrics) {
-    if (typeof defaultMetrics !== 'boolean') {
+    if (typeof defaultMetrics === 'object') {
       collectDefaultMetrics(defaultMetrics);
     } else {
       collectDefaultMetrics();
@@ -18,7 +18,7 @@ export function prometheusRequestHandler(
   const mergedRegisters = Registry.merge([...userRegisters, register]);
 
   return (req: Request, res: Response) => {
-    res.set('Content-Type', 'text/plain');
+    res.set('Content-Type', mergedRegisters.contentType);
     res.end(mergedRegisters.metrics());
   };
 }

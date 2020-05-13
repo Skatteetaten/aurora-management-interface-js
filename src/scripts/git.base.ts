@@ -6,18 +6,18 @@ import { writeFileSync } from 'fs';
 const args = process.argv;
 const appPath = args[2];
 
-interface IGitProperties {
+interface GitProperties {
   [index: string]: string;
 }
 
-interface ICreateGitPropertiesOption {
+interface CreateGitPropertiesOption {
   writeToDisk: boolean;
 }
 
 export function createGitProperties(
-  options: ICreateGitPropertiesOption
+  options: CreateGitPropertiesOption
 ): any | undefined {
-  const prettyArgs: IGitProperties = {
+  const prettyArgs: GitProperties = {
     'commit.id': '%H',
     'commit.id.short': '%h',
     'commit.message': '%s',
@@ -27,7 +27,7 @@ export function createGitProperties(
     'commit.time': '%cI',
     'commit.ref': '%D',
     'commit.time/v1': '%ci',
-    'commit.ref/v1': '%d'
+    'commit.ref/v1': '%d',
   };
 
   const pretty = Object.keys(prettyArgs).reduce((acc, key) => {

@@ -7,7 +7,11 @@ describe('Prometheus endpoint Test', () => {
   });
 
   it('should return default metrics', async () => {
-    const res = await request()
+    const res = await request({
+      metrics: {
+        enabled: true,
+      },
+    })
       .get('/prometheus')
       .expect(200);
 
@@ -17,15 +21,16 @@ describe('Prometheus endpoint Test', () => {
   it('should not return default metrics but a custom metric', async () => {
     const counter = new Counter({
       name: 'test',
-      help: 'test Just a test counter'
+      help: 'test Just a test counter',
     });
 
     counter.inc(2);
 
     const res = await request({
       metrics: {
-        defaultMetrics: false
-      }
+        enabled: true,
+        defaultMetrics: false,
+      },
     })
       .get('/prometheus')
       .set('Accept', 'text/plain')
