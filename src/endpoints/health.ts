@@ -1,22 +1,6 @@
 import { Request, RequestHandler, Response } from 'express';
-import { IManagementConfig } from '../config';
+import { ManagementConfig } from '../config';
 import { ManagementHealth } from '../health';
-
-export function healthRequestHandler(
-  config: IManagementConfig
-): RequestHandler {
-  const managementHealth = new ManagementHealth();
-  managementHealth.cacheFor(config.cacheDuration);
-  managementHealth.addHealthChecks(config.healthChecks);
-
-  return (req: Request, res: Response) => {
-    const health = managementHealth.run();
-    health.then(result => {
-      const status: string = result.status;
-      res.status(getReturnCode(status)).json(result);
-    });
-  };
-}
 
 function getReturnCode(status: string): number {
   switch (status) {
@@ -29,4 +13,18 @@ function getReturnCode(status: string): number {
     case 'UP':
       return 200;
   }
+}
+
+export function healthRequestHandler(config: ManagementConfig): RequestHandler {
+  const managementHealth = new ManagementHealth();
+  managementHealth.cacheFor(config.cacheDuration);
+  managementHealth.addHealthChecks(config.healthChecks);
+
+  return (req: Request, res: Response) => {
+    const health = managementHealth.run();
+    health.then((result) => {
+      const status: string = result.status;
+      res.status(getReturnCode(status)).json(result);
+    });
+  };
 }

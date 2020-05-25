@@ -8,8 +8,8 @@ describe('Env endpoint Test', () => {
         PASSWORD: '12345',
         PRIVATE_KEY: '6789',
         TOP_SECRET: 'void',
-        SECRET_TO_SHOW: 'no secret'
-      }
+        SECRET_TO_SHOW: 'no secret',
+      },
     })
       .get('/env')
       .expect(200);

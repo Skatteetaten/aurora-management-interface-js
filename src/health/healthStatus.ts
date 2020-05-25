@@ -1,18 +1,24 @@
-export interface IHealthFields {
+export interface HealthFields {
   [index: string]: string;
 }
 
-export enum Status {
-  UP,
-  COMMENT,
-  UNKNOWN,
-  OUT_OF_SERVICE,
-  DOWN
-}
+export class Status {
+  public value: string;
+  public weight: number;
 
-export namespace Status {
-  export function valueOf(status: string): Status {
-    switch (status) {
+  public static UP = new Status('UP', 0);
+  public static COMMENT = new Status('COMMENT', 1);
+  public static UNKNOWN = new Status('UNKNOWN', 2);
+  public static OUT_OF_SERVICE = new Status('OUT_OF_SERVICE', 3);
+  public static DOWN = new Status('DOWN', 4);
+
+  constructor(value: string, weight: number) {
+    this.value = value;
+    this.weight = weight;
+  }
+
+  public static valueOf(status: string): Status {
+    switch (status.toUpperCase()) {
       case 'UP':
         return Status.UP;
       case 'COMMENT':
@@ -23,7 +29,6 @@ export namespace Status {
         return Status.OUT_OF_SERVICE;
       case 'DOWN':
         return Status.DOWN;
-
       default:
         return Status.UNKNOWN;
     }
@@ -32,11 +37,11 @@ export namespace Status {
 
 export class HealthStatus {
   private name: string;
-  private fields: IHealthFields;
+  private fields: HealthFields;
 
   private status: Status;
 
-  constructor(name: string, status: Status, fields: IHealthFields = {}) {
+  constructor(name: string, status: Status, fields: HealthFields = {}) {
     this.fields = fields;
     this.name = name;
     this.status = status;
@@ -45,7 +50,7 @@ export class HealthStatus {
   public withField(key: string, value: string): HealthStatus {
     this.fields = {
       ...this.fields,
-      [key]: value
+      [key]: value,
     };
     return this;
   }
@@ -54,10 +59,10 @@ export class HealthStatus {
     return this.name;
   }
 
-  public getFields(): IHealthFields {
+  public getFields(): HealthFields {
     this.fields = {
-      status: Status[this.status],
-      ...this.fields
+      status: this.status.value,
+      ...this.fields,
     };
     return this.fields;
   }

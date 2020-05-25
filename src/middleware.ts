@@ -3,17 +3,17 @@ import { Router } from 'express';
 
 import {
   applyDefaultConfigToMissingProperties,
-  IManagementConfig
+  ManagementConfig,
 } from './config';
 import {
   envRequestHandler,
   healthRequestHandler,
   infoRequestHandler,
   linksRequestHandler,
-  prometheusRequestHandler
+  prometheusRequestHandler,
 } from './endpoints';
 
-export function managementInterface(userConfig?: IManagementConfig): Router {
+export function managementInterface(userConfig?: ManagementConfig): Router {
   const router: Router = express.Router();
   const config = applyDefaultConfigToMissingProperties(userConfig);
 

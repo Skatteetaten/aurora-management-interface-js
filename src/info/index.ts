@@ -1,7 +1,7 @@
 /* tslint:disable:no-console */
 
 import { readFileSync } from 'fs';
-interface IInfoBuild {
+interface InfoBuild {
   name: string;
   artifactId: string;
   groupId: string;
@@ -11,7 +11,7 @@ interface IInfoBuild {
 
 const root = process.cwd();
 
-export function getBuild(): IInfoBuild {
+export function getBuild(): InfoBuild {
   const file = readFileSync(`${root}/package.json`);
   const pkg = JSON.parse(file.toString());
   return {
@@ -19,7 +19,7 @@ export function getBuild(): IInfoBuild {
     artifactId: pkg.artifactId || pkg.name,
     groupId: pkg.groupId,
     description: pkg.description,
-    version: pkg.version
+    version: pkg.version,
   };
 }
 
