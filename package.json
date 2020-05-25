@@ -1,5 +1,5 @@
 {
-  "name": "@skatteetaten/management-interface",
+  "name": "aurora-management-interface",
   "groupId": "no.skatteeaten.aurora",
   "version": "1.0.0",
   "description": "Aurora Management Interface",

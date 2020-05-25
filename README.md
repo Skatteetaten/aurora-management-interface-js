@@ -14,13 +14,13 @@ The project is based on [TypeScript-Node-Starter](https://github.com/Microsoft/T
 
 ## Getting started
 
-`npm install @skatteetaten/management-interface`
+`npm install aurora-management-interface`
 
 ### Use
 
 ```ts
 import express from 'express';
-import { managementInterface } from '@skatteetaten/management-interface';
+import { managementInterface } from 'aurora-management-interface';
 
 const PORT = 8081;
 
