@@ -6,7 +6,7 @@ def overrides = [
     pipelineScript: 'https://git.aurora.skead.no/scm/ao/aurora-pipeline-scripts.git',
     credentialsId: "github",
     versionStrategy: [
-        [ branch: 'master', versionHint: '0']
+        [ branch: 'master', versionHint: '1']
     ],
     iq: false,
     publishToNpm: true, 
