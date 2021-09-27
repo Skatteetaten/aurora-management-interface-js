@@ -16,7 +16,7 @@
     "LICENSE"
   ],
   "publishConfig": {
-    "registry": "https://nexus-npm.aurora.skead.no/npm/repository/npm-internal"
+    "registry": "https://nexus.sits.no/repository/npm-internal"
   },
   "scripts": {
     "prestart": "npm run build",
