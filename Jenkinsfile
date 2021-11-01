@@ -9,6 +9,7 @@ def overrides = [
         [ branch: 'master', versionHint: '1']
     ],
     iq: false,
+    nodeVersion: "12",
     publishToNpm: true, 
     publishSnapshotToNpm: true, 
     deployToNexus: false,
