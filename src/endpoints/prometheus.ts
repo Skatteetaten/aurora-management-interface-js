@@ -17,8 +17,8 @@ export function prometheusRequestHandler(
   const userRegisters = config.metrics?.registers ?? [];
   const mergedRegisters = Registry.merge([...userRegisters, register]);
 
-  return (req: Request, res: Response) => {
+  return async (req: Request, res: Response) => {
     res.set('Content-Type', mergedRegisters.contentType);
-    res.end(mergedRegisters.metrics());
+    res.end(await mergedRegisters.metrics());
   };
 }

@@ -50,9 +50,9 @@ export class ManagementHealth {
       return result;
     }
 
-    const healthResults: Array<
-      Promise<HealthStatus>
-    > = this.healthChecks.map(async (check) => check());
+    const healthResults: Array<Promise<HealthStatus>> = this.healthChecks.map(
+      async (check) => check()
+    );
 
     const healthStatuses = await Promise.all(healthResults);
     const mainStatus = healthStatuses
